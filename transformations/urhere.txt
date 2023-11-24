@@ -1,0 +1,19 @@
+copying proverbs from wiki
+API connecting
+	BitFree
+writing py script w'ChatGPT
+	testing script
+splitting list to 2 files
+transforming proverbs files
+going to github
+editing proverbs
+	"" to «»
+	removing "" from some begin/end transforms
+	removing Judes =)
+
+*** U R HERE ***
+
+combining files
+matching strings
+
+making app

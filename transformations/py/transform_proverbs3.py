@@ -3,7 +3,7 @@ import requests
 def transform_proverb(proverb, index, total):
     # Only print the counter
     print(f"Processing {index}/{total}")
-    api_key = "KEY"
+    api_key = "APIKEY"
     headers = {"Authorization": f"Bearer {api_key}"}
     data = {
         "model": "gpt-4-1106-preview",
@@ -27,13 +27,13 @@ def transform_proverb(proverb, index, total):
         return None
 
 # Reading proverbs from file
-with open("proverbs2.txt", "r") as file:
+with open("../txt/proverbs3.txt", "r") as file:
     proverbs = [line.strip() for line in file if line.strip()]
 
 total_proverbs = len(proverbs)
 transformed_proverbs = [transform_proverb(proverb, index+1, total_proverbs) for index, proverb in enumerate(proverbs)]
 
 # Writing result to file
-with open("transformed_proverbs2.txt", "w") as file:
+with open("../txt/transformed_proverbs3.txt", "w") as file:
     for proverb in transformed_proverbs:
         file.write(proverb + "\n")
