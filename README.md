@@ -1,2 +1,5 @@
 # Chancellerite
-Chancellerated proverbs proect
+
+Chancellerated proverbs project
+
+![First Terminal screenshot](scr_term.jpg)
