@@ -1,9 +1,12 @@
+from openai import OpenAI
 import requests
 
 def transform_proverb(proverb, index, total):
     # Only print the counter
     print(f"Processing {index}/{total}")
-    api_key = "APIKEY"
+    # API key, set it in .env (remember to add .env to .gitignore)
+    client = OpenAI()
+
     headers = {"Authorization": f"Bearer {api_key}"}
     data = {
         "model": "gpt-4-1106-preview",
@@ -12,7 +15,7 @@ def transform_proverb(proverb, index, total):
             "content": "Вы работаете в роли переводчика, который переформулирует поговорки в максимально бюрократический канцеляритный стиль. Пример: «Цыплят по осени считают» превратится в «Подсчет прироста домашней птицы производится после завершения сезона сельскохозяйственных работ»."
         }, {
             "role": "user",
-            "content": f"Переформулируйте поговорку: '{proverb}'"
+            "content": f"Переформулируйте поговорку, без заключения её в кавычки и без печати в ответе исходной: '{proverb}'"
         }]
     }
 
@@ -27,13 +30,13 @@ def transform_proverb(proverb, index, total):
         return None
 
 # Reading proverbs from file
-with open("../txt/proverbs1.txt", "r") as file:
+with open("../txt/proverbs.txt", "r") as file:
     proverbs = [line.strip() for line in file if line.strip()]
 
 total_proverbs = len(proverbs)
 transformed_proverbs = [transform_proverb(proverb, index+1, total_proverbs) for index, proverb in enumerate(proverbs)]
 
 # Writing result to file
-with open("../txt/transformed_proverbs1.txt", "w") as file:
+with open("../txt/transformed_proverbs.txt", "w") as file:
     for proverb in transformed_proverbs:
         file.write(proverb + "\n")
