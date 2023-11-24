@@ -1,2 +1,2 @@
 # chancellerite
-Chancellerated proverbs prject
+Chancellerated proverbs proect
