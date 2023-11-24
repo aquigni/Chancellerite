@@ -1,5 +1,5 @@
-copying proverbs from wiki
-API connecting
+copying proverbs from wiki https://ru.m.wikiquote.org/wiki/Русские_пословицы
+OpenAI API connecting
 	BitFree
 writing py script w'ChatGPT
 	testing script
@@ -9,11 +9,12 @@ going to github
 editing proverbs
 	"" to «»
 	removing "" from some begin/end transforms
-	removing Judes =)
+	removing Judes ✡️
+	combining files
+	matching strings
+making Coding Helper GPT
+
 
 *** U R HERE ***
-
-combining files
-matching strings
 
 making app
