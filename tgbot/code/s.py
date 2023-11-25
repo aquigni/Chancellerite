@@ -35,14 +35,12 @@ def schedule_posts(updater, transformed_texts, proverbs, sent_indices):
     sent_indices.add(index)
 
     # Post in the morning
-    # schedule.every().day.at(f"{random.randint(9, 11)}:{str(random.randint(0, 59)).zfill(2)}").do(send_message, context=updater, message=transformed_texts[index])
-    # schedule.every().day.at("02:29").do(send_message, context=updater, message=transformed_texts[index])
-    schedule.every().day.at("02:56").do(post_morning_proverb, bot=updater.bot, transformed_text=transformed_texts[index])
+    schedule.every().day.at(f"{random.randint(9, 11)}:{str(random.randint(0, 59)).zfill(2)}").do(post_morning_proverb, bot=updater.bot, transformed_text=transformed_texts[index])
+    # schedule.every().day.at("02:56").do(post_morning_proverb, bot=updater.bot, transformed_text=transformed_texts[index])
 
     # Post in the evening
-    # schedule.every().day.at(f"{random.randint(17, 20)}:{str(random.randint(0, 59)).zfill(2)}").do(send_message, context=updater, message=proverbs[index])
-    # schedule.every().day.at("02:30").do(send_message, context=updater, message=proverbs[index])
-    schedule.every().day.at("02:57").do(post_evening_proverb, bot=updater.bot, proverb=proverbs[index])
+    schedule.every().day.at(f"{random.randint(17, 20)}:{str(random.randint(0, 59)).zfill(2)}").do(post_evening_proverb, bot=updater.bot, proverb=proverbs[index])
+    # schedule.every().day.at("02:57").do(post_evening_proverb, bot=updater.bot, proverb=proverbs[index])
 
 if __name__ == "__main__":
     transformed_texts, proverbs = load_texts()
