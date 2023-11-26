@@ -1,4 +1,5 @@
 .env
+venv
 lib
 bin
 pyvenv.cfg
