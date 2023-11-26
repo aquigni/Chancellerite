@@ -5,7 +5,6 @@ Installation
 ```
 cd tgbot/code
 pip install -r requirements.txt
-pip install python-telegram-bot==13.13
 ```
 On mac:
 ```
@@ -28,7 +27,7 @@ then
 cd <tgbotpath>
 python3 -m venv venv
 source venv/bin/activate
-pip install python-telegram-bot==13.13 schedule
+pip install -r requirements.txt
 nano .env
 ```
 YOUR_TELEGRAM_BOT_TOKEN='paste_your_token_here'
