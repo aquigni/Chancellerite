@@ -46,7 +46,7 @@ if __name__ == "__main__":
     transformed_texts, proverbs = load_texts()
     sent_indices = set()
 
-    updater = Updater("5893964607:AAEjUcOGgcqRCVLUGWPH6QpTMi1A3KLMszs")
+    updater = Updater("TELEGRAM_BOT_TOKEN")
     schedule_posts(updater, transformed_texts, proverbs, sent_indices)
 
     updater.start_polling()
