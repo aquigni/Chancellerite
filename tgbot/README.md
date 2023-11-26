@@ -2,17 +2,26 @@
 
 Installation
 
+
+Create bot with [@Botfather](https://t.me/BotFather).
+Remember to add your Telegram bot token to .env:
+```
+touch .env
+echo 'YOUR_TELEGRAM_BOT_TOKEN=<your_token>' >> .env
+```
+
+
 ```
 cd tgbot
 ```
-On mac:
+macOS:
 ```
 pip3 install virtualenv
 virtualenv -p python3 <tgbotpath>
 source <tgbotpath>/bin/activate
 ```
 
-debian:
+Debian:
 ```
 apt install python3-venv tmux
 ```
@@ -20,15 +29,18 @@ then
 ```
 cd <tgbotpath>
 python3 -m venv venv
-source venv/bin/activate
-pip3 install -r requirements.txt
-nano .env
 ```
-YOUR_TELEGRAM_BOT_TOKEN='paste_your_token_here'
+
 ```
 tmux
 ```
-run script inside tmux
+run script inside tmux:
+
+```
+source venv/bin/activate
+pip3 install -r requirements.txt
+python3 s.py
+```
 
 Detach from the tmux session by pressing **Ctrl+B**, then **D**.
 
@@ -50,7 +62,3 @@ tmux kill-server
 
 
 First start tmux session, then venv, then script (then detach session and exit venv).
-
-```
-python3 s.py
-```
