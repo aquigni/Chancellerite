@@ -3,8 +3,7 @@
 Installation
 
 ```
-cd tgbot/code
-pip install -r requirements.txt
+cd tgbot
 ```
 On mac:
 ```
@@ -15,25 +14,18 @@ source <tgbotpath>/bin/activate
 
 debian:
 ```
-apt install python3-venv
+apt install python3-venv tmux
 ```
-or
-```
-pip3 install virtualenv
-```
-
 then
 ```
 cd <tgbotpath>
 python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 nano .env
 ```
 YOUR_TELEGRAM_BOT_TOKEN='paste_your_token_here'
 ```
-pip install python-dotenv
-apt install tmux
 tmux
 ```
 run script inside tmux
@@ -44,4 +36,21 @@ If you need to come back to the session, use:
 
 ```
 tmux attach-session
+```
+
+To kill tmux session:
+```
+tmux list sessions
+tmux kill-session -t session-name
+```
+or
+```
+tmux kill-server
+```
+
+
+First start tmux session, then venv, then script (then detach session and exit venv).
+
+```
+python3 s.py
 ```

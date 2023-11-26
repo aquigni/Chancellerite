@@ -1,18 +1,22 @@
 from dotenv import load_dotenv
 import os
+
+load_dotenv()
+TELEGRAM_BOT_TOKEN = os.getenv('YOUR_TELEGRAM_BOT_TOKEN')
+
+# Add this line to check the token
+print("Loaded Telegram Bot Token:", TELEGRAM_BOT_TOKEN)
+
 import random
 import schedule
 import time
 from telegram.ext import Updater, CallbackContext
 from telegram import Update
 
-load_dotenv()
-TELEGRAM_BOT_TOKEN = os.getenv('YOUR_TELEGRAM_BOT_TOKEN')
-
 def load_texts():
-    with open('../data/t.txt', 'r', encoding='utf-8') as file:
+    with open('t.txt', 'r', encoding='utf-8') as file:
         transformed_texts = file.readlines()
-    with open('../data/p.txt', 'r', encoding='utf-8') as file:
+    with open('p.txt', 'r', encoding='utf-8') as file:
         proverbs = file.readlines()
     return transformed_texts, proverbs
 
@@ -40,18 +44,26 @@ def schedule_posts(updater, transformed_texts, proverbs, sent_indices):
     sent_indices.add(index)
 
     # Post in the morning
-    schedule.every().day.at(f"{random.randint(9, 11)}:{str(random.randint(0, 59)).zfill(2)}").do(post_morning_proverb, bot=updater.bot, transformed_text=transformed_texts[index])
+    morning_hour = random.randint(9, 11)
+    morning_minute = random.randint(0, 59)
+    morning_time = f"{morning_hour:02d}:{morning_minute:02d}"
+    schedule.every().day.at(morning_time).do(post_morning_proverb, bot=updater.bot, transformed_text=transformed_texts[index])
+    # test mode strict time
     # schedule.every().day.at("02:56").do(post_morning_proverb, bot=updater.bot, transformed_text=transformed_texts[index])
 
     # Post in the evening
-    schedule.every().day.at(f"{random.randint(17, 20)}:{str(random.randint(0, 59)).zfill(2)}").do(post_evening_proverb, bot=updater.bot, proverb=proverbs[index])
+    evening_hour = random.randint(17, 20)
+    evening_minute = random.randint(0, 59)
+    evening_time = f"{evening_hour:02d}:{evening_minute:02d}"
+    schedule.every().day.at(evening_time).do(post_evening_proverb, bot=updater.bot, proverb=proverbs[index])
+    # test mode strict time
     # schedule.every().day.at("02:57").do(post_evening_proverb, bot=updater.bot, proverb=proverbs[index])
 
 if __name__ == "__main__":
     transformed_texts, proverbs = load_texts()
     sent_indices = set()
 
-    updater = Updater("TELEGRAM_BOT_TOKEN")
+    updater = Updater(TELEGRAM_BOT_TOKEN)
     schedule_posts(updater, transformed_texts, proverbs, sent_indices)
 
     updater.start_polling()
