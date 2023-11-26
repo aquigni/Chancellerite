@@ -1,8 +1,13 @@
+from dotenv import load_dotenv
+import os
 import random
 import schedule
 import time
 from telegram.ext import Updater, CallbackContext
 from telegram import Update
+
+load_dotenv()
+TELEGRAM_BOT_TOKEN = os.getenv('YOUR_TELEGRAM_BOT_TOKEN')
 
 def load_texts():
     with open('../data/t.txt', 'r', encoding='utf-8') as file:
