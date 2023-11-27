@@ -22,9 +22,11 @@ def load_texts():
 
 def send_message(bot, message, reply_to_message_id=None):
     chat_id = "@Chancellerist"
+    parse_mode = None
     if reply_to_message_id:
-        message = "👆 " + message
-    sent_message = bot.send_message(chat_id=chat_id, text=message, reply_to_message_id=reply_to_message_id)
+        message = "👆 <tg-spoiler>" + message + "</tg-spoiler>"
+        parse_mode = "HTML"
+    sent_message = bot.send_message(chat_id=chat_id, text=message, parse_mode=parse_mode, reply_to_message_id=reply_to_message_id)
     return sent_message.message_id
 
 morning_message_id = None
@@ -44,20 +46,20 @@ def schedule_posts(updater, transformed_texts, proverbs, sent_indices):
     sent_indices.add(index)
 
     # Post in the morning
-    morning_hour = random.randint(9, 11)
-    morning_minute = random.randint(0, 59)
-    morning_time = f"{morning_hour:02d}:{morning_minute:02d}"
-    schedule.every().day.at(morning_time).do(post_morning_proverb, bot=updater.bot, transformed_text=transformed_texts[index])
+    # morning_hour = random.randint(9, 11)
+    # morning_minute = random.randint(0, 59)
+    # morning_time = f"{morning_hour:02d}:{morning_minute:02d}"
+    # schedule.every().day.at(morning_time).do(post_morning_proverb, bot=updater.bot, transformed_text=transformed_texts[index])
     # test mode strict time
-    # schedule.every().day.at("02:56").do(post_morning_proverb, bot=updater.bot, transformed_text=transformed_texts[index])
+    schedule.every().day.at("10:01").do(post_morning_proverb, bot=updater.bot, transformed_text=transformed_texts[index])
 
     # Post in the evening
-    evening_hour = random.randint(17, 20)
-    evening_minute = random.randint(0, 59)
-    evening_time = f"{evening_hour:02d}:{evening_minute:02d}"
-    schedule.every().day.at(evening_time).do(post_evening_proverb, bot=updater.bot, proverb=proverbs[index])
+    # evening_hour = random.randint(17, 20)
+    # evening_minute = random.randint(0, 59)
+    # evening_time = f"{evening_hour:02d}:{evening_minute:02d}"
+    # schedule.every().day.at(evening_time).do(post_evening_proverb, bot=updater.bot, proverb=proverbs[index])
     # test mode strict time
-    # schedule.every().day.at("02:57").do(post_evening_proverb, bot=updater.bot, proverb=proverbs[index])
+    schedule.every().day.at("18:01").do(post_evening_proverb, bot=updater.bot, proverb=proverbs[index])
 
 if __name__ == "__main__":
     transformed_texts, proverbs = load_texts()
