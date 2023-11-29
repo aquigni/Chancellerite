@@ -12,6 +12,19 @@ import schedule
 import time
 from telegram.ext import Updater, CallbackContext
 from telegram import Update
+import json
+
+# Checking if the file with already indicated sent lines exists
+def load_sent_indices():
+    try:
+        with open('sent_indices.json', 'r') as file:
+            return set(json.load(file))
+    except FileNotFoundError:
+        return set()
+
+def save_sent_indices(indices):
+    with open('sent_indices.json', 'w') as file:
+        json.dump(list(indices), file)
 
 def load_texts():
     with open('t.txt', 'r', encoding='utf-8') as file:
@@ -22,6 +35,7 @@ def load_texts():
 
 def send_message(bot, message, reply_to_message_id=None):
     chat_id = "@Chancellerist"
+    # chat_id = "@chncllrt_test"
     parse_mode = None
     if reply_to_message_id:
         message = "👆 <tg-spoiler>" + message + "</tg-spoiler>"
@@ -35,35 +49,28 @@ def post_morning_proverb(bot, transformed_text):
     global morning_message_id
     morning_message_id = send_message(bot, transformed_text)
 
-def post_evening_proverb(bot, proverb):
+def post_evening_proverb(bot, proverb, sent_indices):
     send_message(bot, proverb, reply_to_message_id=morning_message_id)
+    save_sent_indices(sent_indices)
 
 def schedule_posts(updater, transformed_texts, proverbs, sent_indices):
-    if len(sent_indices) >= len(transformed_texts):
-        sent_indices.clear()
+    # Check if all indices have been used, if yes, clear the set
+    # if len(sent_indices) >= len(transformed_texts):
+    #     sent_indices.clear()
 
+    # Select a random index from the available indices
     index = random.choice([i for i in range(len(transformed_texts)) if i not in sent_indices])
     sent_indices.add(index)
 
-    # Post in the morning
-    # morning_hour = random.randint(9, 11)
-    # morning_minute = random.randint(0, 59)
-    # morning_time = f"{morning_hour:02d}:{morning_minute:02d}"
-    # schedule.every().day.at(morning_time).do(post_morning_proverb, bot=updater.bot, transformed_text=transformed_texts[index])
-    # test mode strict time
-    schedule.every().day.at("10:01").do(post_morning_proverb, bot=updater.bot, transformed_text=transformed_texts[index])
+    # Post in the morning strict time
+    schedule.every().day.at("10:38").do(post_morning_proverb, bot=updater.bot, transformed_text=transformed_texts[index])
 
-    # Post in the evening
-    # evening_hour = random.randint(17, 20)
-    # evening_minute = random.randint(0, 59)
-    # evening_time = f"{evening_hour:02d}:{evening_minute:02d}"
-    # schedule.every().day.at(evening_time).do(post_evening_proverb, bot=updater.bot, proverb=proverbs[index])
-    # test mode strict time
-    schedule.every().day.at("18:01").do(post_evening_proverb, bot=updater.bot, proverb=proverbs[index])
+    # Post in the evening strict time
+    schedule.every().day.at("18:39").do(post_evening_proverb, bot=updater.bot, proverb=proverbs[index], sent_indices=sent_indices)
 
 if __name__ == "__main__":
     transformed_texts, proverbs = load_texts()
-    sent_indices = set()
+    sent_indices = load_sent_indices()
 
     updater = Updater(TELEGRAM_BOT_TOKEN)
     schedule_posts(updater, transformed_texts, proverbs, sent_indices)
