@@ -4,3 +4,4 @@ lib
 bin
 pyvenv.cfg
 sent_indices.json
+p.txt
